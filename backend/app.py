@@ -11,16 +11,25 @@ def scan_vulnerabilities():
     # Get data from JSON in the request
     data = request.get_json()
     domain = data.get('domain')
+    scan = data.get('scan')
 
     if not domain:
         return jsonify({'error': 'No domain provided'}), 400
 
-    try:
-        # Trigger scan using ZAP
-        scan_results = zap_scanner.scan_domain(domain)
-        return jsonify(scan_results), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+    if scan not in ['spider', 'active']:
+        return jsonify({'error': 'Invalid scan type'}), 400
+
+    elif scan == 'spider':
+        try:
+            if scan == 'spider':
+                # Trigger spider scan using ZAP
+                scan_results = zap_scanner.spider_domain(domain)
+            elif scan == 'active':
+                # Trigger active scan using ZAP
+                scan_results = zap_scanner.active_scan_domain(domain)
+            return jsonify(scan_results), 200
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':

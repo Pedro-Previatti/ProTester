@@ -1,4 +1,4 @@
-#!/home/pedro/Documents/ProTester/venv/bin/python3
+#!/home/pedro/Documents/ProTester/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
